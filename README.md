@@ -1,6 +1,6 @@
 # SAFE:  Simple Preserved and Augmented FEatures
 
-This is the official Pytorch implementation of our paper:
+This is a personal reproduction of Pytorch implementation of paper:
 
 > [Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspectives](https://arxiv.org/abs/2408.06741)
 >
@@ -105,14 +105,13 @@ This script enables training with 4 GPUs, you can specify the number of GPUs by 
 bash scripts/eval.sh
 ```
 
-We provide the pretrained checkpoint in `./checkpoint/checkpoint-best.pth`, you can directly run the script to reproduce our results. 
+We provide the pretrained self checkpoint in `./checkpoint/checkpoint-best-self.pth`, you can directly run the script to reproduce our results. 
 
 ## Accuracy
 
 Settings: 
 
-seed=3, base_lr=1e-4, max_epochs=100, batch_size=256.
-
+seed=3, base_lr=1e-4, max_epochs=100, batch_size=256. SAFE_self achieves a higher overall mean accuracy (94.38% vs. 93.16%) and outperforms the original SAFE in most categories, though it shows slight trade-offs in CycleGAN, Glide, Midjourney, VQDM, and DALLE2 detection performance.
 
 
 ### AIGCDetectBenchmark
