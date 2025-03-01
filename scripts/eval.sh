@@ -34,6 +34,6 @@ do
         --batch_size 32 \
         --num_workers 16 \
         --output_dir $RESUME_PATH \
-        --resume $RESUME_PATH/checkpoint-best.pth \
+        --resume $RESUME_PATH/checkpoint-best-self.pth \
         --eval True
 done
