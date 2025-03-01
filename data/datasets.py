@@ -191,7 +191,7 @@ class TrainDataset(Dataset):
                 self.data_list.extend(real_list[:args.num_train//(2 * num_datasets)] + fake_list[:args.num_train//(2 * num_datasets)])
 
     def get_image_paths(self, dir_path):
-        image_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp')
+        image_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp', '.tif')
         image_paths = []
         for root, dirs, files in sorted(os.walk(dir_path)):
             for file in sorted(files):
@@ -201,6 +201,7 @@ class TrainDataset(Dataset):
 
     def get_real_and_fake_lists(self, folder_path):
         real_list, fake_list = [], []
+        # print(folder_path)
         for root, dirs, files in sorted(os.walk(folder_path, followlinks=True)):
             for dir_name in sorted(dirs):
                 if dir_name == "0_real":
@@ -212,7 +213,6 @@ class TrainDataset(Dataset):
         return real_list, fake_list
 
     def __len__(self):
-
         return len(self.data_list)
 
     def __getitem__(self, index):

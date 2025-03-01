@@ -137,6 +137,7 @@ def evaluate(data_loader, model, device, val=None, use_amp=False):
         images = batch[0]
         target = batch[-1]
 
+
         images = images.to(device, non_blocking=True)
         target = target.to(device, non_blocking=True)
 
@@ -180,6 +181,7 @@ def evaluate(data_loader, model, device, val=None, use_amp=False):
 
     output_all = torch.concat(output_ddp, dim=0)
     labels_all = torch.concat(labels_ddp, dim=0)
+    
 
     y_pred = softmax(output_all.detach().cpu().numpy(), axis=1)[:, 1]
     y_true = labels_all.detach().cpu().numpy()

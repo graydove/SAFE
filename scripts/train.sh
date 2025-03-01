@@ -1,5 +1,5 @@
 
-GPU_NUM=4
+GPU_NUM=2
 WORLD_SIZE=1
 RANK=0
 MASTER_ADDR=localhost
@@ -38,13 +38,14 @@ do
             --data_path "$train_dataset" \
             --eval_data_path "$eval_dataset" \
             --save_ckpt_freq 1 \
-            --batch_size 32 \
-            --blr 1e-2 \
+            --batch_size 256 \
+            --blr 1e-4 \
             --weight_decay 0.01 \
             --warmup_epochs 1 \
-            --epochs 20 \
+            --epochs 200 \
             --num_workers 16 \
             --output_dir $OUTPUT_PATH \
+            --seed 3 \
         2>&1 | tee -a $OUTPUT_PATH/log_train.txt
 
     done

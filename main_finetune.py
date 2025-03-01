@@ -342,8 +342,8 @@ def main(args):
         
         ROOT = args.eval_data_path
         VAL_DICT = {
-            "data/datasets/test1_ForenSynths/test": ['progan', 'stylegan', 'stylegan2', 'biggan', 'cyclegan', 'stargan', 'gaugan', 'deepfake'],
-            "data/datasets/test4_GenImage/test": ['Midjourney', 'stable_diffusion_v_1_4', 'stable_diffusion_v_1_5', 'ADM', 'Glide', 'wukong', 'VQDM', 'BigGAN'],
+            "./data/datasets/test1_ForenSynths/test": ['progan', 'stylegan', 'stylegan2', 'biggan', 'cyclegan', 'stargan', 'gaugan', 'deepfake'],
+            "./data/datasets/test4_GenImage/test": ['Midjourney', 'stable_diffusion_v_1_4', 'stable_diffusion_v_1_5', 'ADM', 'Glide', 'wukong', 'VQDM', 'BigGAN', 'FLUX.1', 'SDXL'],
         }
         try:
             vals = VAL_DICT[args.eval_data_path]
@@ -352,7 +352,9 @@ def main(args):
 
         rows = [["{} model testing on...".format(args.resume)],
             ['testset', 'accuracy', 'avg precision']]
-
+        
+        acc_list = []
+        ap_list = []
         for v_id, val in enumerate(vals):
             
             args.eval_data_path = os.path.join(ROOT, val)
@@ -380,9 +382,14 @@ def main(args):
             print(f"Accuracy of the network on {len(dataset_val)} test images: {test_stats['acc1']:.2%}")
 
             print(f"test dataset is {val} acc: {acc:.2%}, ap: {ap:.2%}")
-            print("***********************************")
-    
+            acc_list.append(acc)
+            ap_list.append(ap)
+            print("**********************************************************************")
+            
             rows.append([val, acc * 100, ap * 100])
+        acc_mean = sum(acc_list) / len(acc_list)
+        ap_mean = sum(ap_list) / len(ap_list)
+        print(f"Mean Acc: {acc_mean:.2%}, Mean AP: {ap_mean:.2%}")
 
         def calculate_column_means(rows):
             if not rows or len(rows[0]) < 2:

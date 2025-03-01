@@ -6,11 +6,6 @@ This is the official Pytorch implementation of our paper:
 >
 > Ouxiang Li, Jiayin Cai, Yanbin Hao, Xiaolong Jiang, Yao Hu, Fuli Feng
 
-## News
-
-- `2024/11` :fire: We collect a new testset [`DiTFake`](https://rec.ustc.edu.cn/share/bb75c2e0-aa6c-11ef-add8-4fbd6e5ad235), comprising three SOTA DiT-based generators (i.e., Flux, PixArt, and SD3). We hope this dataset could facilitate more comprehensive evaluations for SID.
-- `2024/11` :tada: Our paper is accepted by KDD2025 ADS Track.
-
 ## Requirements
 
 Install the environment as follows:
@@ -31,15 +26,12 @@ We are using torch 2.2.1 in our production environment, but other versions shoul
 
 |             |                            paper                             |                             Url                              |
 | :---------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-|  Train Set  | [CNNDetection CVPR2020](https://github.com/PeterWang512/CNNDetection)            | [Link](https://cmu.app.box.com/s/4syr4womrggfin0tsfhxohaec5dh6n48) |
-|  Val   Set  | [CNNDetection CVPR2020](https://github.com/PeterWang512/CNNDetection)            | [Link](https://cmu.app.box.com/s/4syr4womrggfin0tsfhxohaec5dh6n48/folder/129187348352) |
-|  Test Set1  | [CNNDetection CVPR2020](https://github.com/PeterWang512/CNNDetection)            | [Link](https://cmu.app.box.com/s/4syr4womrggfin0tsfhxohaec5dh6n48/folder/129187348352) |
-|  Test Set2  | [FreqNet AAAI2024](https://github.com/chuangchuangtan/FreqNet-DeepfakeDetection) | [Link](https://drive.google.com/drive/folders/11E0Knf9J1qlv2UuTnJSOFUjIIi90czSj?usp=sharing) |
-|  Test Set3  | [UniversalFakeDetect CVPR2023](https://github.com/Yuheng-Li/UniversalFakeDetect) | [Link](https://drive.google.com/drive/folders/1nkCXClC7kFM01_fqmLrVNtnOYEFPtWO-?usp=sharing) |
-|  Test Set4  | [GenImage NeurIPS2023](https://github.com/GenImage-Dataset/GenImage)             | [Link](https://drive.google.com/drive/folders/1jGt10bwTbhEZuGXLyvrCuxOI0cBqQ1FS) |
-|  Test Set5  | [DiTFake Ours](https://github.com/Ouxiang-Li/SAFE)                               | [Link](https://rec.ustc.edu.cn/share/bb75c2e0-aa6c-11ef-add8-4fbd6e5ad235) |
-
-The generation script for our dataset is provided in `data/generation.py`, we hope more synthetic images from up-to-date generative models coud be promptly evaluated and made publicly available. Details of our `DiTFake` testset and comparative results can be found in the latest [ArXiv](https://arxiv.org/abs/2408.06741) paper.
+|  Train Set  | [CNNDetection CVPR2020](https://github.com/PeterWang512/CNNDetection)            | [googledrive](https://drive.google.com/file/d/1iVNBV0glknyTYGA9bCxT_d0CVTOgGcKh/view) |
+|  Val   Set  | [CNNDetection CVPR2020](https://github.com/PeterWang512/CNNDetection)            | [googledrive](https://drive.google.com/file/d/1FU7xF8Wl_F8b0tgL0529qg2nZ_RpdVNL/view) |
+|  Test Set1  | [CNNDetection CVPR2020](https://github.com/PeterWang512/CNNDetection)            | [googledrive](https://drive.google.com/file/d/1z_fD3UKgWQyOTZIBbYSaQ-hz4AzUrLC1/view) |
+|  Test Set2  | [FreqNet AAAI2024](https://github.com/chuangchuangtan/FreqNet-DeepfakeDetection) | [googledrive](https://drive.google.com/drive/folders/11E0Knf9J1qlv2UuTnJSOFUjIIi90czSj?usp=sharing) |
+|  Test Set3  | [UniversalFakeDetect CVPR2023](https://github.com/Yuheng-Li/UniversalFakeDetect) | [googledrive](https://drive.google.com/drive/folders/1nkCXClC7kFM01_fqmLrVNtnOYEFPtWO-?usp=sharing) |
+|  Test Set4  | [GenImage NeurIPS2023](https://github.com/GenImage-Dataset/GenImage)             | [googledrive](https://drive.google.com/drive/folders/1jGt10bwTbhEZuGXLyvrCuxOI0cBqQ1FS) |
 
 ## Directory structure
 
@@ -96,10 +88,6 @@ data/datasets
 |   |-- stable_diffusion_v_1_5
 |   |-- VQDM
 |   |-- wukong
-|-- test5_DiTFake/test
-|   |-- FLUX.1-schnell
-|   |-- PixArt-Sigma-XL-2-1024-MS
-|   |-- stable-diffusion-3-medium-diffusers
 ```
 </details>
 
@@ -119,7 +107,65 @@ bash scripts/eval.sh
 
 We provide the pretrained checkpoint in `./checkpoint/checkpoint-best.pth`, you can directly run the script to reproduce our results. 
 
+## Accuracy
+
+Settings: 
+
+seed=3, base_lr=1e-4, max_epochs=100, batch_size=256.
+
+
+
+### AIGCDetectBenchmark
+
+|           |   ProGAN   | StyleGAN  |  BigGAN   | CycleGAN  |  StarGAN   |  GauGAN   | StyleGAN2 |   WFIR    |    ADM    |   Glide   | Midjourney |  SD v1.4  |  SD v1.5  |   VQDM    |  Wukong   |  DALLE2   |   Mean    |
+| :-------: | :--------: | :-------: | :-------: | :-------: | :--------: | :-------: | :-------: | :-------: | :-------: | :-------: | :--------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+|   SAFE    |   99.86    |   98.04   |   89.72   | **98.87** |   99.90    |   91.52   |   98.57   |   51.95   |   82.05   | **96.29** | **95.27**  |   99.41   |   99.27   | **96.29** |   98.21   | **95.30** |   93.16   |
+| SAFE_self | **100.00** | **99.62** | **90.62** |   95.72   | **100.00** | **95.68** | **99.84** | **70.55** | **87.09** |   93.08   |   91.68    | **99.53** | **99.44** |   93.80   | **99.06** |   94.30   | **94.38** |
+
+&nbsp;
+
+### ForenSynths
+
+|           |   ProGAN   | StyleGAN  | StyleGAN2 |  BigGAN   | CycleGAN  |  StarGAN   |  GauGAN   | Deepfake  |   SITD    |    SAN    |    CRN    |   IMLE    |   WFIR    |   Mean    |
+| :-------: | :--------: | :-------: | :-------: | :-------: | :-------: | :--------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+|   SAFE    |   99.86    |   98.04   |   98.57   |   89.72   | **98.87** |   99.90    |   91.52   | **93.10** | **85.56** |   95.91   | **50.10** | **50.10** |   51.95   |   84.86   |
+| SAFE_self | **100.00** | **99.62** | **99.84** | **90.62** |   95.72   | **100.00** | **95.68** |   89.82   |   81.39   | **97.95** |   50.00   |   50.00   | **70.55** | **86.25** |
+
+The numbers of images in SAN and SITD are less than 1K. ForenSynths dataset is an unbalanced dataset.
+
+&nbsp;
+
+### Self-Synthesis (GAN Based)
+
+|           |  AttGAN   |   BEGAN   | CramerGAN | InfoMaxGAN |  MMDGAN   |  RelGAN   |   S3GAN   |   SNGAN   |   STGAN   |   Mean    |
+| :-------: | :-------: | :-------: | :-------: | :--------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+|   SAFE    |   99.38   | **99.80** | **99.73** |   99.55    | **99.73** |   99.55   | **94.48** |   98.80   | **99.90** | **98.99** |
+| SAFE_self | **99.72** |   99.65   |   99.62   | **99.65**  |   99.65   | **99.90** |   89.35   | **99.52** |   99.85   |   98.55   |
+
+&nbsp;
+
+### UniversalFakeDetect (DM Based)
+
+|           |   DALLE   | Glide_100_10 | Glide_100_27 | Glide_50_27 |    ADM    |  LDM_100  |  LDM_200  | LDM_200_cfg |   Mean    |
+| :-------: | :-------: | :----------: | :----------: | :---------: | :-------: | :-------: | :-------: | :---------: | :-------: |
+|   SAFE    |   97.50   |  **97.25**   |  **95.75**   |  **96.60**  |   82.36   |   98.80   |   98.80   |    98.65    | **95.71** |
+| SAFE_self | **98.30** |    94.85     |    92.10     |    95.40    | **82.95** | **99.55** | **99.60** |  **99.55**  |   95.29   |
+
+&nbsp;
+
+### GenImage
+
+|           | Midjourney |  SDv1.4   |  SDv1.5   |    ADM    |   Glide   |  Wukong   |   VQDM    |  BigGAN   |   Mean    |
+| :-------: | :--------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+|   SAFE    | **95.27**  |   99.41   |   99.27   |   82.05   | **96.29** |   98.21   | **96.29** | **97.84** | **95.58** |
+| SAFE_self |   91.68    | **99.53** | **99.44** | **87.09** |   93.08   | **99.06** |   93.80   |   96.33   |   93.15   |
+
+&nbsp;
+
+
+
 ## Citing
+
 If you find this repository useful for your work, please consider citing it as follows:
 ```
 @article{li2024improving,
