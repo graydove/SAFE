@@ -111,7 +111,7 @@ We provide the pretrained self checkpoint in `./checkpoint/checkpoint-best-self.
 
 Settings: 
 
-seed=3, base_lr=1e-4, max_epochs=100, batch_size=256. SAFE-self achieves a higher overall mean accuracy (94.38% vs. 93.16%) and outperforms the original SAFE in most categories, though it shows slight trade-offs in CycleGAN, Glide, Midjourney, VQDM, and DALLE2 detection performance.
+seed=3, base_lr=1e-4, max_epochs=100, batch_size=256. SAFE-self achieves a higher overall mean accuracy (94.38% vs. 93.16%) and outperforms the original SAFE in most categories, though it shows slight trade-offs in CycleGAN, Glide, Midjourney, VQDM, and DALLE2.
 
 
 ### AIGCDetectBenchmark
